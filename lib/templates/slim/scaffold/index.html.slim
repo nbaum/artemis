@@ -1,0 +1,21 @@
+h1 Listing <%= plural_table_name %>
+
+table
+  thead
+    tr
+<% attributes.each do |attribute| -%>
+      th <%= attribute.human_name %>
+<% end -%>
+      th
+
+  tbody
+    - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+      tr
+<% attributes.each do |attribute| -%>
+        td = <%= singular_table_name %>.<%= attribute.name %>
+<% end -%>
+        td = link_to fa_icon("edit", text: 'View'), <%= singular_table_name %>
+
+br
+
+= link_to 'New <%= human_name %>', new_<%= singular_table_name %>_path
