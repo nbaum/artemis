@@ -2,7 +2,7 @@ Application.routes.draw do
   root 'site#root'
 end
 
-Application.error_routes.draw do
-  get '404' => 'errors'
-  get '500' => 'errors'
+Application.config.exceptions_app.draw do
+  get '404' => 'errors#not_found'
+  get '500' => 'errors#server_error'
 end

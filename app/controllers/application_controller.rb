@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-  before_action do
-    @title = "Boilerplate"
-  end
+  protect_from_forgery with: :exception
+  include ApplicationHelper
 end

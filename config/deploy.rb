@@ -1,25 +1,17 @@
-# config valid only for Capistrano 3.2
-lock '3.2.1'
+set :application, 'app'
+set :repo_url, raise("Set repo")
 
-set :application, raise("Set application name, for some reason")
-set :repo_url, raise("Set appliction repo")
+set :bundle_binstubs, nil
 
-set :deploy_to, raise("Set deployment target")
-
-set :linked_dirs, %w{tmp log}
-set :linked_files, %w{.env db/production.sqlite tmp/token.txt}
-
-set :keep_releases, 5
+set :linked_files, %w{config/database.yml .env}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle}
 
 namespace :deploy do
-
   desc 'Restart application'
   task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
+    on roles(:app), in: :sequence, wait: 1 do
       execute :touch, release_path.join('tmp/restart.txt')
     end
   end
-
   after :publishing, :restart
-
 end

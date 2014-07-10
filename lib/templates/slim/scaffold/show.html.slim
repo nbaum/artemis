@@ -1,7 +1,7 @@
 header
   h1 Editing <%= singular_table_name %>
   aside
-    = button_to <%= singular_table_name %>, data: {confirm: 'Are you sure?'}, method: :delete do
-      = fa_icon("trash-o", text: "Destroy")
+    = button_to @<%= singular_table_name %>, data: {confirm: 'Are you sure?'}, method: :delete do
+      = icon("trash-o", "Destroy")
 
 = render partial: 'form'

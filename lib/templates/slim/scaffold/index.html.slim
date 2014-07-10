@@ -14,7 +14,7 @@ table
 <% attributes.each do |attribute| -%>
         td = <%= singular_table_name %>.<%= attribute.name %>
 <% end -%>
-        td = link_to fa_icon("edit", text: 'View'), <%= singular_table_name %>
+        td = link_to icon("edit", "View"), <%= singular_table_name %>
 
 br
 

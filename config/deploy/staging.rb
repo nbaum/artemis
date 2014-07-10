@@ -1,5 +1,5 @@
 set :deploy_to, raise("Set deployment target")
-set :branch, "production"
+set :branch, "staging"
 
 role :app, %w{}
 role :web, %w{}

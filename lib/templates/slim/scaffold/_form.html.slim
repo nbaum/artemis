@@ -6,11 +6,11 @@
         - @<%= singular_table_name %>.errors.full_messages.each do |message|
           li = message
 
-  fieldset
+  table.properties
 <% attributes.each do |attribute| -%>
-    .field
-      = f.label :<%= attribute.name %>
-      = f.<%= attribute.field_type %> :<%= attribute.name %>
+    tr
+      td = f.label :<%= attribute.name %>
+      td = f.<%= attribute.field_type %> :<%= attribute.name %>
 <% end -%>
 
-  .actions = f.button
+  p.actions = f.button

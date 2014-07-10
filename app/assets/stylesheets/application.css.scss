@@ -1,5 +1,13 @@
-@import "font-awesome";
-@import "compass";
 @import "reset";
 @import "base";
-@import "errors";
+
+.flash.notice {
+  color: #fff;
+  background: #6a6;
+  margin: 0.5em 0;
+  font-weight: bold;
+  padding: 0.5em 1em;
+  border: 1px solid #686;
+  box-shadow: rgba(#fff, 0.5) 1px 1px 0 inset;
+}
+
