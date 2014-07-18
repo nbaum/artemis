@@ -10,7 +10,10 @@ Bundler.require(:default, Rails.env)
 class Application < Rails::Application
   
   config.autoload_paths += ["#{config.root}/lib/"]
-  config.exceptions_app = ActionDispatch::Routing::RouteSet.new
+  config.exceptions_app = lambda do |env|
+    env["PATH_INFO"] = "/errors#{env["PATH_INFO"]}"
+    self.routes.call(env)
+  end
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.raise_delivery_errors = true
   config.filter_parameters += [:password]

@@ -8,7 +8,5 @@ meta name="viewport" content="width=device-width, initial-scale=1"
 = csrf_meta_tags
 body
   - flash.each do |name, msg|
-      .flash class=name = msg
-  header
-    h1 = @title
-  main = yield
+    .flash class=name = msg
+  = yield
