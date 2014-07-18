@@ -36,4 +36,3 @@ end
 Slim::Engine.set_default_options sort_attrs: false, format: :html5
 
 Rails.application.routes.default_url_options[:host] = ENV['DEFAULT_URL_HOST']
-
