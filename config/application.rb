@@ -17,7 +17,7 @@ class Application < Rails::Application
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.raise_delivery_errors = true
   config.filter_parameters += [:password]
-  config.secret_key_base = ENV['SECRET_TOKEN']
+  config.secret_key_base = ENV['SECRET_KEY_BASE']
   config.session_store :cookie_store, key: '_session'
   
   config.generators do |g|
