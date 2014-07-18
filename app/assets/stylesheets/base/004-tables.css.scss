@@ -1,0 +1,11 @@
+table:not(.properties) {
+  & > thead, tbody, tfoot {
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+  }
+  & > * > tr {
+    & > th, & > td {
+      padding: 0.1em 0.5em;
+    }
+  }
+}
