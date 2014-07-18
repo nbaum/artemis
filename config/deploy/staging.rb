@@ -1,4 +1,4 @@
-set :deploy_to, raise("Set deployment target")
+set :deploy_to, "/home/apps/#{fetch(:application)}"
 set :branch, "staging"
 
 role :app, %w{}
