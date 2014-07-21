@@ -40,7 +40,13 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   helper_method :<%= singular_table_name %>
 
-  def <%= plural_table_name %>
+  def <%= singular_table_name %>?
+    !!params[:id]
+  end
+
+  helper_method :<%= singular_table_name %>
+
+  def <%= plural_table_name %>?
     @<%= plural_table_name %> ||= <%= orm_class.all(class_name) %>
   end
 

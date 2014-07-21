@@ -17,7 +17,7 @@ module Slim
       protected
 
       def available_views
-        ['index', 'show', 'new', 'edit', '_form', '_menu', '_table']
+        ['index', 'show', 'new', 'edit', '_form', '_header']
       end
 
       def handler
