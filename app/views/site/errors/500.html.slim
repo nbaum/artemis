@@ -1,5 +1,10 @@
 h1 Server Error
 p Something went wrong and we couldn't do what you asked.
 p Sorry about that.
-- if @fake
-  p: small Actually, everything is fine. Apart from this sentence, this page is what is shown in the event of a real server error.
+- if e = @exception
+  p = e.message
+  p = e.backtrace[0]
+- else
+  p: small
+    ' Actually, everything is fine. Apart from this sentence, this page
+    | is what is shown in the event of a real server error.

@@ -33,6 +33,7 @@ gem 'capistrano-rails', group: :development
 
 # Useful libraries
 gem 'faraday'
+gem 'chronic_duration'
 
 # Development
 group :development do

@@ -1,2 +1,16 @@
 @import "compass";
-@import "base/*.scss";
+@import "compass/reset";
+
+body {
+  font: 14px/1.0 sans-serif;
+}
+
+.vbox, .hbox {
+  display: flex;
+  outline: 1px solid red;
+}
+
+.vbox {
+  flex-direction: column;
+}
+

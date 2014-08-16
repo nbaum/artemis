@@ -1,0 +1,316 @@
+- game = client.game
+- player = game.player
+
+.vbox
+  .hbox
+    - game.ships.each do |ship|
+      - if ship == game.player
+        = button_to(ship.name, api_path(:set_ship, index: ship.index), disabled: true)
+      - else
+        = button_to(ship.name, api_path(:set_ship, index: ship.index))
+  .hbox
+    - 10.times do |i|
+      - case game.player.consoles[i]
+      - when 0
+        = button_to(Artemis::CONSOLE_TYPES[i],
+                    api_path(:claim_console, index: i))
+      - when 1
+        = button_to(Artemis::CONSOLE_TYPES[i] + "*",
+                    api_path(:unclaim_console, index: i))
+      - when 2
+        button disabled=true = Artemis::CONSOLE_TYPES[i]
+        /= button_to(Artemis::CONSOLE_TYPES[i],
+                    api_path(:claim_console, index: i))
+      - when nil
+        button disabled=true = Artemis::CONSOLE_TYPES[i]
+  .hbox
+    = button_to("Reset", api_path(:reset))
+    = button_to("Ready", api_path(:ready), disabled: client.game.ready)
+  .hbox
+    .vbox
+      table
+        - %i"x y z".each do |axis|
+          tr
+            th = axis
+            td = player.__send__(axis)
+        tr
+          th heading
+          td = player.heading
+        tr
+          th pitch
+          td = player.pitch
+        tr
+          th roll
+          td = player.roll
+        tr
+          th velocity
+          td
+            - if player.reverse
+              | -
+            = player.velocity
+        tr
+          th y velocity
+          td
+            = player.y_velocity
+        tr
+          th rudder
+          td = player.rudder
+        tr
+          th impulse
+          td = player.impulse
+        tr
+          th warp
+          td = player.warp
+        tr
+          th energy
+          td = player.energy
+        tr
+          th max velocity
+          td = player.top_speed
+        tr
+          th turn rate
+          td = player.turn_rate
+        tr
+          th auto beams
+          td = player.auto_beams
+        tr
+          th shields
+          td = player.shields
+        tr
+          th weapons target
+          td = player.weapons_target
+        tr
+          th dock target
+          td = player.docking_target
+        tr
+          th scan target
+          td = player.scan_target
+        tr
+          th science target
+          td = player.science_target
+        tr
+          th captain target
+          td = player.captain_target
+        tr
+          th name
+          td = player.name
+        tr
+          th fore shields
+          td = player.fore_shields
+        tr
+          th fore shields max
+          td = player.fore_shields_max
+        tr
+          th aft shields
+          td = player.aft_shields
+        tr
+          th aft shields max
+          td = player.aft_shields_max
+        tr
+          th free coolant
+          td = player.coolant
+        tr
+          th beam frequency
+          td = "ABCDE"[player.beam_frequency] rescue ""
+        tr
+          th drive type
+          td = player.drive_type
+        tr
+          th ship type
+          td = player.ship_type
+        tr
+          th faction
+          td = player.faction
+        tr
+          th red alert
+          td = player.red_alert
+        tr
+    #screen
+      - game.actors.each do |actor|
+        p = actor
+    #right
+
+  /.panel
+    .title Stations
+    .bar
+      - [1, 2, 3].each do |i|
+        - case client.ship[:consoles][i]
+        - when 0
+          = button_to(Artemis::CONSOLE_TYPES[i],
+                      api_path(:claim_console, index: i))
+        - when 1
+          = button_to(Artemis::CONSOLE_TYPES[i],
+                      api_path(:unclaim_console, index: i), class: 'active')
+        - when 2
+          button disabled=true = Artemis::CONSOLE_TYPES[i]
+          /= button_to(Artemis::CONSOLE_TYPES[i],
+                      api_path(:claim_console, index: i))
+        - when nil
+          button disabled=true = Artemis::CONSOLE_TYPES[i]
+
+  /.panel
+    .bar
+      = button_to("Reset", api_path(:reset))
+      = button_to("Ready", api_path(:ready), disabled: client.game.ready)
+
+  /.panel
+    = "#{player[:velocity].to_i} m/s"
+
+  /#top-left
+    .panel
+      .title Ships
+      .bar
+        - client.game.ships.each.with_index do |ship, i|
+          - if i == client.game.ship
+            = button_to(ship[:name], api_path(:set_ship, index: i), class: 'active', disabled: true)
+          - else
+            = button_to(ship[:name], api_path(:set_ship, index: i))
+    - unless player
+      .panel
+        .title Ship
+        .bar
+          - Artemis::SHIP_TYPES.each.with_index do |name, i|
+            = button_to(name, api_path(:set_ship_settings, ship_type: i),
+                        disabled: client.ship[:ship_type] == i,
+                          class: client.ship[:ship_type] == i ? 'active' : nil)
+      .panel
+        .title Name
+        .bar
+          = text_field_tag 'name', client.ship[:name]
+          = button_tag "Apply"
+      .panel
+        .title Drive
+        .bar
+          - Artemis::DRIVE_TYPES.each.with_index do |name, i|
+            = button_to(name, api_path(:set_ship_settings, drive_type: i),
+                        disabled: client.ship[:drive_type] == i,
+                        class: client.ship[:drive_type] == i ? 'active' : nil)
+    .panel
+      .title Options
+      .bar
+        = button_to("Reset", api_path(:reset))
+        = button_to("Ready", api_path(:ready), disabled: client.game.ready)
+    .panel
+      .title Stations
+      .bar
+        - [1, 2, 3].each do |i|
+          - case client.ship[:consoles][i]
+          - when 0
+            = button_to(Artemis::CONSOLE_TYPES[i],
+                        api_path(:claim_console, index: i))
+          - when 1
+            = button_to(Artemis::CONSOLE_TYPES[i],
+                        api_path(:unclaim_console, index: i), class: 'active')
+          - when 2
+            button disabled=true = Artemis::CONSOLE_TYPES[i]
+            /= button_to(Artemis::CONSOLE_TYPES[i],
+                        api_path(:claim_console, index: i))
+          - when nil
+            button disabled=true = Artemis::CONSOLE_TYPES[i]
+    - if player
+      .panel  
+        .title Energy
+        p = client.player[:energy].to_i
+      - if player[:systems]
+        #bottom-right
+          - impulse = (client.player[:reverse] * -2 + 1) * client.player[:impulse] * 100
+          .panel
+            .title THRTL
+            .slider-control
+              .slider: input type='range' min=0 max=4 step=1 value=player[:warp] data-api="set_warp" data-value-argument="warp"
+              .mnemonic W
+            .slider-control
+              .slider: input type='range' min=-100 max=100 step=10 value=impulse data-api="set_impulse" data-value-argument="impulse"
+              .mnemonic I
+          .panel
+            .title Power
+            - %i"beams torpedos sensors maneuvering impulse warp fore aft".each.with_index do |system, i|
+              - sys = player[:systems][system]
+              .slider-control
+                /.heat = (sys[:coolant]).to_i
+                /.heat = (sys[:heat] * 100).to_i
+                .slider: input type='range' min=0 max=300 step=25 value=sys[:energy]*300 data-api="set_energy" data-value-argument="energy" data-extra-arguments={system:i}.to_json
+                .mnemonic = system[0]
+            hr.clear
+            button data-api="set_energy" data-extra-arguments={energy:0}.to_json Scram
+            button data-api="set_energy" data-extra-arguments={energy:100}.to_json Nominal
+            button data-api="set_energy" data-extra-arguments={energy:300}.to_json !!!
+      /br
+      /.panel
+        .title Comms
+        table
+          - game.messages.reverse.take(5).each do |origin, message|
+            tr
+              td = origin
+              td
+                - message.split("^").each do |line|
+                  p = line
+
+    #bottom-left
+      .panel
+        .title Munitions
+        table
+          thead
+            tr
+              th Type
+              th Avl
+              th Rdy
+              th
+          - ["Homing", "Nuke", "Mine", "EMP"].each do |name|
+            tr
+              td = name
+              td 1
+              td 1
+              td.bar
+                = button_to("Load", api_path(:jump), disabled: game.jumping)
+                = button_to("Unload", api_path(:jump), disabled: game.jumping)
+                = button_to("Fire", api_path(:jump), disabled: game.jumping)
+    
+    #top-right style="text-align:right"
+      .panel#map
+        .title Map
+        canvas width="250" height="250"
+      br
+      .panel
+        .title Scanner
+        table width=250
+          tr
+            th colspan=4 Friendlies
+          - client.game.actors.each do |id, obj|
+            - next unless %i"base npc".member?(obj[:type])
+            - next unless player[:side] == obj[:side]
+            tr
+              td width="100%" = obj[:name]
+              td.right
+                = (((client.player[:x] - obj[:x]) ** 2 + (client.player[:z] - obj[:z]) ** 2) ** 0.5).to_i / 1000
+              td.right
+                - if obj[:shields].to_i
+                  = obj[:shields].to_i
+                - else
+                  = obj[:fore_shields].to_i
+                  | /
+                  = obj[:aft_shields].to_i
+              td.bar
+                = button_to("J", api_path(:jump, id: id), disabled: game[:jumping])
+                = button_to("T", api_path(:target, id: id), disabled: client.player[:weapons_target] == id)
+                = button_to("S", api_path(:scan, id: id))
+          tr
+            th colspan=4 Hostiles
+          - client.game[:objects].each do |id, obj|
+            - next unless %i"base npc".member?(obj[:type])
+            - next unless player[:side] != obj[:side]
+            tr
+              td width="100%" = obj[:name]
+              td.right
+                = (((client.player[:x] - obj[:x]) ** 2 + (client.player[:z] - obj[:z]) ** 2) ** 0.5).to_i / 1000
+              td.right
+                - if obj[:shields]
+                  = obj[:shields].to_i
+                - else
+                  = obj[:fore_shields].to_i
+                  | /
+                  = obj[:aft_shields].to_i
+              td.bar
+                = button_to("J", api_path(:jump, id: id), disabled: game[:jumping])
+                = button_to("T", api_path(:target, id: id), disabled: client.player[:weapons_target] == id)
+                = button_to("S", api_path(:scan, id: id))
